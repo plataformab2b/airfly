@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import airportsData from '../data/airports'; // Importing airport data
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 
 const SearchPage = () => {
   // State to handle user selections and airport codes
@@ -26,6 +27,16 @@ const SearchPage = () => {
       ...(name === 'toCity' && { toAirportCode: '' })
     }));
   };
+
+  // Handler for changes in the number of passengers
+const handlePassengersChange = (e) => {
+  const { name, value } = e.target;
+  setSearch((prevSearch) => ({
+    ...prevSearch,
+    [name]: value,
+  }));
+};
+
 
   // Handler for changes in airport fields
   const handleAirportChange = (e, cityType) => {
@@ -74,74 +85,81 @@ const SearchPage = () => {
   };
 
   return (
-    <div>
-      <h1>Flight Booking System</h1>
+    <div className="container mt-5">
+      <h1 className="mb-4">Flight Booking System</h1>
       <form onSubmit={handleSubmit}>
-
+  
         {/* Dropdown to select the departure city */}
-        <label htmlFor="fromCity">From City</label>
-        <select name="fromCity" onChange={handleCityChange} value={search.fromCity}>
-          {airportsData.map((entry, index) => (
-            <option key={index} value={entry.city}>
-              {entry.city}
-            </option>
-          ))}
-        </select>
-
+        <div className="mb-3">
+          <label htmlFor="fromCity" className="form-label">From City</label>
+          <select className="form-select" name="fromCity" onChange={handleCityChange} value={search.fromCity}>
+            {airportsData.map((entry, index) => (
+              <option key={index} value={entry.city}>
+                {entry.city}
+              </option>
+            ))}
+          </select>
+        </div>
+  
         {/* Dropdown to select the departure airport if a city has been selected */}
         {search.fromCity && (
-          <>
-            <label htmlFor="fromAirport">From Airport</label>
-            <select name="fromAirport" onChange={(e) => handleAirportChange(e, 'from')}>
+          <div className="mb-3">
+            <label htmlFor="fromAirport" className="form-label">From Airport</label>
+            <select className="form-select" name="fromAirport" onChange={(e) => handleAirportChange(e, 'from')}>
               {airportsData.find(city => city.city === search.fromCity).airports.map((airport, index) => (
                 <option key={index} value={airport.name}>
                   {airport.name}
                 </option>
               ))}
             </select>
-          </>
+          </div>
         )}
-
+  
         {/* Dropdown to select the destination city */}
-        <label htmlFor="toCity">To City</label>
-        <select name="toCity" onChange={handleCityChange} value={search.toCity}>
-          {airportsData.map((entry, index) => (
-            <option key={index} value={entry.city}>
-              {entry.city}
-            </option>
-          ))}
-        </select>
-
+        <div className="mb-3">
+          <label htmlFor="toCity" className="form-label">To City</label>
+          <select className="form-select" name="toCity" onChange={handleCityChange} value={search.toCity}>
+            {airportsData.map((entry, index) => (
+              <option key={index} value={entry.city}>
+                {entry.city}
+              </option>
+            ))}
+          </select>
+        </div>
+  
         {/* Dropdown to select the destination airport if a city has been selected */}
         {search.toCity && (
-          <>
-            <label htmlFor="toAirport">To Airport</label>
-            <select name="toAirport" onChange={(e) => handleAirportChange(e, 'to')}>
+          <div className="mb-3">
+            <label htmlFor="toAirport" className="form-label">To Airport</label>
+            <select className="form-select" name="toAirport" onChange={(e) => handleAirportChange(e, 'to')}>
               {airportsData.find(city => city.city === search.toCity).airports.map((airport, index) => (
                 <option key={index} value={airport.name}>
                   {airport.name}
                 </option>
               ))}
             </select>
-          </>
+          </div>
         )}
-
+  
         {/* Input to select the date */}
-        <label htmlFor="fromDate">Date</label>
-        <input
-            type="date"
-            name="fromDate"
-            onChange={handleCityChange}
-            value={search.fromDate}
-        />
-
+        <div className="mb-3">
+          <label htmlFor="fromDate" className="form-label">Date</label>
+          <input type="date" className="form-control" name="fromDate" onChange={handleCityChange} value={search.fromDate} />
+        </div>
+  
+        {/* Input to enter the number of passengers */}
+        <div className="mb-3">
+          <label htmlFor="passengers" className="form-label">Number of Passengers</label>
+          <input type="number" className="form-control" name="passengers" onChange={handlePassengersChange} value={search.passengers} />
+        </div>
+  
         {/* Button to submit the form */}
-        <button type="submit">Search</button>
+        <button type="submit" className="btn btn-primary">Search</button>
       </form>
-      
+  
       {/* Displaying the flight data in a table */}
       {flightsData.length > 0 && (
-        <table>
+        <table className="table mt-4">
           <thead>
             <tr>
               <th>Weekday</th>
@@ -164,6 +182,7 @@ const SearchPage = () => {
       )}
     </div>
   );
+  
 };
 
 export default SearchPage;
