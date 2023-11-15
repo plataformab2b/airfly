@@ -27,6 +27,16 @@ const SearchPage = () => {
     }));
   };
 
+  // Handler for changes in the number of passengers
+const handlePassengersChange = (e) => {
+  const { name, value } = e.target;
+  setSearch((prevSearch) => ({
+    ...prevSearch,
+    [name]: value,
+  }));
+};
+
+
   // Handler for changes in airport fields
   const handleAirportChange = (e, cityType) => {
     const airportName = e.target.value;
@@ -134,6 +144,15 @@ const SearchPage = () => {
             onChange={handleCityChange}
             value={search.fromDate}
         />
+
+        {/* Input to enter the number of passengers */}
+      <label htmlFor="passengers">Number of Passengers</label>
+      <input
+        type="number"
+        name="passengers"
+        onChange={handlePassengersChange}
+        value={search.passengers}
+      />
 
         {/* Button to submit the form */}
         <button type="submit">Search</button>
