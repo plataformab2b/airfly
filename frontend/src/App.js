@@ -1,20 +1,22 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes // Importa 'Routes' en lugar de 'Switch'
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
 import SearchPage from './components/SearchPage';
+import LoginForm from './components/LoginForm'; 
+import RegisterForm from './components/RegisterForm';  
+import HomePage from './components/HomePage';  
 
 function App() {
   return (
     <Router>
-      <Routes> {/* Usa 'Routes' en lugar de 'Switch' */}
-        <Route path="/" element={<SearchPage />} /> {/* Cambia 'component' a 'element' y envuelve a SearchPage con <> */}
-        {/* Otras rutas pueden ir aquí */}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/search" element={<SearchPage />} /> 
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm />} />
+        {/* more routes*/}
       </Routes>
     </Router>
   );
 }
-
 export default App;
