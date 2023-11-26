@@ -21,7 +21,7 @@ const airportsData = [
         { name: "Chicago Midway International Airport", code: "MDW" }
       ]
     },
-    // ... Añade aquí más ciudades y aeropuertos ...
+    // ... here we need to add more cities ...
     {
       city: "Las Vegas",
       airports: [
