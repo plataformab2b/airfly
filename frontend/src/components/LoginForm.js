@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Make sure to install axios with `npm install axios`
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // LoginForm component handles the login process
 const LoginForm = () => {
@@ -33,27 +34,47 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        value={credentials.username}
-        onChange={handleChange}
-      />
+<div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <h1 className="text-center mb-4">Login</h1>
 
-      <label htmlFor="password">Password:</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        value={credentials.password}
-        onChange={handleChange}
-      />
+         <div className="card">
+            <div className="card-body">
+              
+              <form onSubmit={handleSubmit}>
 
-      <button type="submit">Login</button>
-    </form>
+                <div className="mb-3">
+                  <label className="form-label">Username</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    name="username"  
+                    value={credentials.username}
+                    onChange={handleChange} 
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label  className="form-label">Password</label>
+                  <input 
+                    type="password"     
+                    className="form-control"
+                    name="password" 
+                    value={credentials.password }    
+                    onChange={handleChange} 
+                  />
+                </div>
+
+                <button className="btn btn-primary">Login</button>
+
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
