@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Make sure to install axios with `npm install axios`
+import axios from 'axios'; // Ensure axios is installed for making HTTP requests
+import 'bootstrap/dist/css/bootstrap.min.css'; // Importing Bootstrap for styling
 
-// LoginForm component handles the login process
+// LoginForm component handles the user login process
 const LoginForm = () => {
-  // State to store user credentials
+  // State to store user credentials input
   const [credentials, setCredentials] = useState({
     username: '',
     password: ''
   });
 
-  // Handles input changes and updates state
+  // State to store messages for user feedback
+  const [loginMessage, setLoginMessage] = useState('');
+
+  // Function to handle changes in form inputs and update state accordingly
   const handleChange = (e) => {
     setCredentials({
       ...credentials,
@@ -17,43 +21,70 @@ const LoginForm = () => {
     });
   };
 
-  // Handles the form submission
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Send a POST request to the login endpoint with the user credentials
+      // Send a POST request to the login endpoint with user credentials
       const response = await axios.post('http://localhost:3001/login', credentials);
-      // Save the received token to localStorage or handle it as needed
-      localStorage.setItem('token', response.data.token);
-      // Redirect user or handle logged in state
+
+      // If the authentication is successful and a token is received
+      if (response.data.token) {
+        // Store the JWT token in local storage
+        localStorage.setItem('jwtToken', response.data.token);
+        // Set the success message for user feedback
+        setLoginMessage('You have been successfully logged in.');
+        // Redirect user or handle logged-in state here
+        // e.g., this.props.history.push('/home');
+      }
     } catch (error) {
-      // Handle errors, e.g., show error message to the user
-      console.error(error.response.data.error);
+      // If the login attempt fails, handle errors
+      if (error.response && error.response.data.error) {
+        // Log the error message for debugging purposes
+        console.error('Login error:', error.response.data.error);
+      }
+      // Set the error message for user feedback
+      setLoginMessage('Login failed. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        value={credentials.username}
-        onChange={handleChange}
-      />
-
-      <label htmlFor="password">Password:</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        value={credentials.password}
-        onChange={handleChange}
-      />
-
-      <button type="submit">Login</button>
-    </form>
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          <h1 className="text-center mb-4">Login</h1>
+          <div className="card">
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Username</label>
+                  <input 
+                    type="text" 
+                    className="form-control" 
+                    name="username"  
+                    value={credentials.username}
+                    onChange={handleChange} 
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Password</label>
+                  <input 
+                    type="password"     
+                    className="form-control"
+                    name="password" 
+                    value={credentials.password}    
+                    onChange={handleChange} 
+                  />
+                </div>
+                <button type="submit" className="btn btn-primary">Login</button>
+                {/* Display login feedback message to the user */}
+                {loginMessage && <div className="alert alert-info">{loginMessage}</div>}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

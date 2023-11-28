@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Make sure to install axios with `npm install axios`
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 // RegisterForm component handles the user registration process
 const RegisterForm = () => {
@@ -33,38 +35,72 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input
-        id="username"
-        name="username"
-        type="text"
-        value={registrationData.username}
-        onChange={handleChange}
-      />
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-6 offset-md-3">
+          
+          <h1 className="text-center mb-4">Register</h1>
 
-      <label htmlFor="email">Email:</label>
-      <input
-        id="email"
-        name="email"
-        type="email"
-        value={registrationData.email}
-        onChange={handleChange}
-      />
+          <div className="card">
+            <div className="card-body">
 
-      <label htmlFor="password">Password:</label>
-      <input
-        id="password"
-        name="password"
-        type="password"
-        value={registrationData.password}
-        onChange={handleChange}
-      />
+              <form onSubmit={handleSubmit}>
+              
+                <div className="mb-3">
+                  <label className="form-label">Username</label>
 
-      <button type="submit">Register</button>
-    </form>
+                  <input 
+                    type="text"
+                    className="form-control" 
+                    id="username"
+                    name="username"
+                    value={registrationData.username}
+                    onChange={handleChange}                 
+                  />
+                
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Email</label>
+                
+                  <input 
+                    type="email"
+                    className="form-control"
+                    id="email"
+                    name="email"
+                    value={registrationData.email}
+                    onChange={handleChange}                 
+                  />
+              
+                </div>
+              
+                <div className="mb-3">
+                  <label className="form-label">Password</label>
+                
+                  <input 
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    value={registrationData.password}
+                    onChange={handleChange}                 
+                  />
+              
+                </div>
+
+                <button type="submit" className="btn btn-primary">
+                  Register 
+                </button>
+
+              </form>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   );
 };
 
 export default RegisterForm;
-
