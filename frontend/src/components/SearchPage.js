@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import airportsData from '../data/airports'; // Importing airport data
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { isAuthenticated } from '../utils/authService'
 
 const SearchPage = () => {
   // State to handle user selections and airport codes
@@ -166,6 +167,8 @@ const handlePassengersChange = (e) => {
               <th>Departure</th>
               <th>Arrival</th>
               <th>Aircraft</th>
+              <th style={{width: '100px'}}>Book</th>
+              
             </tr>
           </thead>
           <tbody>
@@ -175,10 +178,21 @@ const handlePassengersChange = (e) => {
                 <td>{`${flight.departure.iataCode} - ${flight.departure.scheduledTime}`}</td>
                 <td>{`${flight.arrival.iataCode} - ${flight.arrival.scheduledTime}`}</td>
                 <td>{flight.aircraft.modelText}</td>
+                <td>
+                {isAuthenticated() && (
+                  <button 
+                    className="btn btn-primary"
+                    style={{marginLeft: 'auto', display: 'block'}}  
+                  >
+                  Select
+                  </button>
+                )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+        
       )}
     </div>
   );
