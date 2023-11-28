@@ -22,4 +22,26 @@ exports.searchFlights = async (req, res) => {
     console.error('Error fetching flight data:', error);
     res.status(500).send('Error fetching flight data');
   }
+  try {
+    const response = await axios.get(url, { params });
+    const flightsData = response.data;
+
+    // Save the flight data to the database
+    const newFlight = new Flight({
+      weekday: 1, // Replace with the actual weekday value
+      departure: 'AirportA', // Replace with the actual departure value
+      arrival: 'AirportB', // Replace with the actual arrival value
+      aircraft: 'Boeing 747' // Replace with the actual aircraft value
+      // Add other fields as needed
+    });
+
+    await newFlight.save();
+
+    // Send the flight data back to the client or do other processing as needed
+    res.status(200).json(flightsData);
+  } catch (error) {
+    console.error('Error fetching flight data:', error);
+    res.status(500).send('Error fetching flight data');
+  }
 };
+

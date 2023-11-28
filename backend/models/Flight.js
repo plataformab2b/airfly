@@ -18,7 +18,25 @@ const flightSchema = new mongoose.Schema({
   aircraft: {
     type: String,
     required: true
-  }
+  },
+  paymentDetails: {
+    cardNumber: {
+      type: String,
+      required: true,
+    },
+    cardHolderName: {
+      type: String,
+      required: true,
+    },
+    expiryDate: {
+      type: String, 
+      required: true,
+    },
+    cvv: {
+      type: String,
+      required: true,
+    },
+  },
 });
 
 // Flight Model

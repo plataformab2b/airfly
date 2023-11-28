@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import airportsData from '../data/airports'; // Importing airport data
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import BookingForm from './BookingForm';
+//import PaymentComponent from './PaymentComponent';
+
 
 const SearchPage = () => {
   // State to handle user selections and airport codes
@@ -10,11 +13,15 @@ const SearchPage = () => {
     toCity: '',
     fromDate: '',
     toAirportCode: '',
-    fromAirportCode: ''
+    fromAirportCode: '',
+    passengers: 1, // Initialize passengers to 1
+
   });
 
   // State to store flight data retrieved from the backend
   const [flightsData, setFlightsData] = useState([]);
+  const [selectedFlight, setSelectedFlight] = useState(null);
+
 
   // Handler for changes in city fields
   const handleCityChange = (e) => {
@@ -83,9 +90,30 @@ const handlePassengersChange = (e) => {
     // Fetching flight data after form submission
     fetchFlightsData(submissionData);
   };
+  const handleFlightSelection = (flight) => {
+    setSelectedFlight(flight);
+  };
 
+  const handleBookingSubmit = async (message) => {
+    // Perform any additional actions after booking submission
+    console.log(message);
+  
+    // Fetch updated data from the server
+    try {
+      const response = await axios.get('http://localhost:3001/api/get-updated-data');
+      const updatedData = response.data;
+  
+      // Update state or perform other actions with the updated data
+      setFlightsData(updatedData.flights);
+    } catch (error) {
+      console.error('Error fetching updated data:', error);
+    }
+  };
+  
   return (
+    
     <div className="container mt-5">
+      
       <h1 className="mb-4">Flight Booking System</h1>
       <form onSubmit={handleSubmit}>
   
@@ -154,7 +182,7 @@ const handlePassengersChange = (e) => {
         </div>
   
         {/* Button to submit the form */}
-        <button type="submit" className="btn btn-primary">Search</button>
+        <button type="submit" className="btn btn-primary" >Search</button>
       </form>
   
       {/* Displaying the flight data in a table */}
@@ -180,6 +208,8 @@ const handlePassengersChange = (e) => {
           </tbody>
         </table>
       )}
+            {selectedFlight && <BookingForm selectedFlight={selectedFlight} onBookingSubmit={handleBookingSubmit} />}
+
     </div>
   );
   
