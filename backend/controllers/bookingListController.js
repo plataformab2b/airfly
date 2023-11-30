@@ -1,33 +1,49 @@
 // bookingListController.js
 
-const getAllBookings = async (req, res) => {
-    // Logic to retrieve all bookings from the database
-    // Example: const bookings = await Booking.find();
-    // Return the bookings in the response
-    res.json(bookings);
-  };
-  
-  const getBookingById = async (req, res) => {
-    // Logic to retrieve a booking by ID from the database
-    // Example: const booking = await Booking.findById(req.params.id);
-    // Return the booking in the response
-    res.json(booking);
-  };
-  
-  const addBooking = async (req, res) => {
-    // Logic to add a new booking to the database
-    // Example: const newBooking = new Booking(req.body);
-    // await newBooking.save();
-    // Return the added booking in the response
-    res.json(newBooking);
-  };
-  
-  // Define other controller functions as needed...
-  
-  module.exports = {
-    getAllBookings,
-    getBookingById,
-    addBooking,
-    // Add other exported functions here...
-  };
-  
+const Booking = require('../models/booking');
+
+const createBooking = async (req, res) => {
+  try {
+    // Assuming you have the flightId and userId from the selected flight and logged-in user
+    const { flightId, userId } = req.body;
+
+    const newBooking = new Booking({
+      flightId,
+      userId,
+      // Add other booking details as needed
+    });
+
+    const savedBooking = await newBooking.save();
+
+    res.json(savedBooking);
+  } catch (error) {
+    console.error('Error creating booking:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+const addBooking = async (req, res) => {
+  try {
+    // Create a new booking using the Booking schema and save it to the database
+    const newBooking = new Booking({
+      weekday: req.body.weekday,
+      departure: req.body.departure,
+      arrival: req.body.arrival,
+      aircraft: req.body.aircraft,
+      // Add other fields as needed
+    });
+    await newBooking.save();
+
+    res.json(newBooking); // Return the added booking in the response
+  } catch (error) {
+    console.error('Error adding booking:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
+module.exports = {
+  getAllBookings,
+  getBookingById,
+  addBooking,
+  createBooking,
+  // Add other exported functions here...
+};
