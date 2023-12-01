@@ -1,5 +1,4 @@
 import React from 'react';
-import paymentSuccessGif from '../'; // Update the path accordingly
 
 const PaymentSuccess = () => {
   return (
