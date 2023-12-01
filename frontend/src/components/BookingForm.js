@@ -12,13 +12,14 @@ const BookingForm = () => {
       // Save the selected flight data to the backend (you can use axios.post here)
       console.log('Saving selected flight:', selectedFlight);
 
-      // After saving, navigate to the payment form
-      navigate('/payment-form');
+      // After saving, navigate to the payment form with the selected flight data
+      navigate('/payment-form', { state: { selectedFlight } });
     } catch (error) {
       console.error('Error saving selected flight:', error);
       // Handle error, show a message, etc.
     }
   };
+
   return (
     <div className="container mt-5">
       <h1>Booking Details</h1>
