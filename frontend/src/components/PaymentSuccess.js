@@ -4,11 +4,7 @@ import paymentSuccessGif from '../'; // Update the path accordingly
 const PaymentSuccess = () => {
   return (
     <div className="container mt-5 text-center">
-      <img
-        src="https://i.pinimg.com/originals/0d/e4/1a/0de41a3c5953fba1755ebd416ec109dd.gif"// Replace with your tick image URL
-        alt="Success"
-        style={{ width: '100px', height: '100px' }}
-      />
+      <img src="https://cdn.iconscout.com/icon/premium/png-512-thumb/payment-done-4153286-3446841.png?f=webp&w=256" width="200" height="200"   allowFullScreen></img>
       <h2 className="mt-3">Payment Successful!</h2>
       <p>Your payment has been processed successfully.</p>
     </div>
