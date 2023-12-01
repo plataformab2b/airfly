@@ -3,8 +3,12 @@ import axios from 'axios';
 import airportsData from '../data/airports'; // Importing airport data
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { isAuthenticated } from '../utils/authService'
+import { useNavigate } from 'react-router-dom';
 
 const SearchPage = () => {
+  const navigate = useNavigate();
+  const [selectedBooking, setSelectedBooking] = useState(null);
+
   // State to handle user selections and airport codes
   const [search, setSearch] = useState({
     fromCity: '',
@@ -83,6 +87,24 @@ const handlePassengersChange = (e) => {
     };
     // Fetching flight data after form submission
     fetchFlightsData(submissionData);
+
+    // Redirect to the booking page
+  };
+
+   // Function to handle the selection of a flight and navigation to the booking form
+   const handleSelectBooking = async (selectedFlight) => {
+    // Include flight ID in the submission data
+    const submissionWithId = {
+      ...selectedFlight,
+      id: selectedFlight._id,
+    };
+  
+    // Save the selected flight data into the state
+    setSelectedBooking(submissionWithId);
+  
+    // Navigate to the booking form
+    navigate('/booking-form', { state: { selectedFlight: submissionWithId } })
+      //.catch((error) => console.error('Error navigating to booking form:', error));
   };
 
 
@@ -185,7 +207,7 @@ const handlePassengersChange = (e) => {
                   <button 
                     className="btn btn-primary"
                     style={{marginLeft: 'auto', display: 'block'}}  
-                  >
+                    onClick={() => handleSelectBooking(flight)}>
                   Select
                   </button>
                 )}
