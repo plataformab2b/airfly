@@ -1,10 +1,11 @@
 import React from 'react';
+import paymentSuccessGif from '../'; // Update the path accordingly
 
 const PaymentSuccess = () => {
   return (
     <div className="container mt-5 text-center">
       <img
-        src="" // Replace with your tick image URL
+        src="https://i.pinimg.com/originals/0d/e4/1a/0de41a3c5953fba1755ebd416ec109dd.gif"// Replace with your tick image URL
         alt="Success"
         style={{ width: '100px', height: '100px' }}
       />
