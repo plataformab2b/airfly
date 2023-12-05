@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import airportsData from '../data/airports'; // Importing airport data
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -20,6 +20,23 @@ const SearchPage = () => {
 
   // State to store flight data retrieved from the backend
   const [flightsData, setFlightsData] = useState([]);
+
+  useEffect(() => {
+    // Set default cities and airports when the component mounts
+    const defaultFromCity = airportsData[0].city;
+    const defaultToCity = airportsData[1].city;
+    const defaultFromAirportCode = airportsData[0].airports[0].code;
+    const defaultToAirportCode = airportsData[1].airports[0].code;
+
+    setSearch({
+      fromCity: defaultFromCity,
+      toCity: defaultToCity,
+      fromDate: '',
+      fromAirportCode: defaultFromAirportCode,
+      toAirportCode: defaultToAirportCode
+    });
+  }, []);
+
 
   // Handler for changes in city fields
   const handleCityChange = (e) => {
@@ -47,12 +64,16 @@ const handlePassengersChange = (e) => {
   const handleAirportChange = (e, cityType) => {
     const airportName = e.target.value;
     const cityData = airportsData.find(city => city.city === search[`${cityType}City`]);
-    const airportCode = cityData.airports.find(airport => airport.name === airportName).code;
+    
+    if (cityData) {
+      const airport = cityData.airports.find(airport => airport.name === airportName);
+      const airportCode = airport ? airport.code : '';
 
-    setSearch(prevSearch => ({
-      ...prevSearch,
-      [`${cityType}AirportCode`]: airportCode
-    }));
+      setSearch(prevSearch => ({
+        ...prevSearch,
+        [`${cityType}AirportCode`]: airportCode
+      }));
+    }
   };
 
   // Function to fetch flight data from the backend
