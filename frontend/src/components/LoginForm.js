@@ -32,7 +32,14 @@ const LoginForm = () => {
     }
   };
 
+   // Method to handle check-in
+   const handleCheckIn = () => {
+    // Add your logic to handle check-in, for example, print a message to the console
+    console.log('Check-in successful!');
+  };
+
   return (
+    <div>
     <form onSubmit={handleSubmit}>
       <label htmlFor="username">Username:</label>
       <input
@@ -54,6 +61,10 @@ const LoginForm = () => {
 
       <button type="submit">Login</button>
     </form>
+     {/* Button and method for check-in */}
+     <button onClick={handleCheckIn}>Check-in</button>
+     </div>
+     
   );
 };
 
