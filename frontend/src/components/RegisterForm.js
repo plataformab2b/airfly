@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios'; // Make sure to install axios with `npm install axios`
+import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-// RegisterForm component handles the user registration process
 const RegisterForm = () => {
   // State to store user registration data
   const [registrationData, setRegistrationData] = useState({
@@ -11,6 +9,9 @@ const RegisterForm = () => {
     email: '',
     password: ''
   });
+
+  // State to store the registration message
+  const [registrationMessage, setRegistrationMessage] = useState('');
 
   // Handles input changes and updates state
   const handleChange = (e) => {
@@ -26,11 +27,22 @@ const RegisterForm = () => {
     try {
       // Send a POST request to the register endpoint with the registration data
       const response = await axios.post('http://localhost:3001/register', registrationData);
-      // Handle the response, e.g., notify the user of successful registration
-      // Redirect to login page or auto-login the user
+
+      // If the registration is successful, show a success message
+      if (response.data) {
+        setRegistrationMessage('Your registration has been completed successfully.');
+
+        // Reset the form for a new registration
+        setRegistrationData({
+          username: '',
+          email: '',
+          password: ''
+        });
+      }
     } catch (error) {
-      // Handle errors, e.g., show error message to the user
-      console.error(error.response.data.error);
+      // If there's an error during registration, log it and set an error message
+      console.error('Registration error:', error.response.data.error);
+      setRegistrationMessage('Registration failed. Please try again.');
     }
   };
 
@@ -38,17 +50,12 @@ const RegisterForm = () => {
     <div className="container mt-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          
           <h1 className="text-center mb-4">Register</h1>
-
           <div className="card">
             <div className="card-body">
-
               <form onSubmit={handleSubmit}>
-              
                 <div className="mb-3">
                   <label className="form-label">Username</label>
-
                   <input 
                     type="text"
                     className="form-control" 
@@ -57,12 +64,10 @@ const RegisterForm = () => {
                     value={registrationData.username}
                     onChange={handleChange}                 
                   />
-                
                 </div>
 
                 <div className="mb-3">
                   <label className="form-label">Email</label>
-                
                   <input 
                     type="email"
                     className="form-control"
@@ -71,12 +76,10 @@ const RegisterForm = () => {
                     value={registrationData.email}
                     onChange={handleChange}                 
                   />
-              
                 </div>
-              
+
                 <div className="mb-3">
                   <label className="form-label">Password</label>
-                
                   <input 
                     type="password"
                     className="form-control"
@@ -85,18 +88,16 @@ const RegisterForm = () => {
                     value={registrationData.password}
                     onChange={handleChange}                 
                   />
-              
                 </div>
-
+                
                 <button type="submit" className="btn btn-primary">
-                  Register 
+                  Register
                 </button>
-
+                {/* Display registration feedback message to the user */}
+                {registrationMessage && <div className="alert alert-info">{registrationMessage}</div>}
               </form>
-
             </div>
           </div>
-
         </div>
       </div>
     </div>
