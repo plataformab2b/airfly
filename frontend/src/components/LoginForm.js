@@ -25,7 +25,7 @@ const LoginForm = () => {
       const response = await axios.post('http://localhost:3001/login', credentials);
       if (response.data.token) {
         localStorage.setItem('jwtToken', response.data.token);
-        // Redirect to the search page after successful login
+        // Redirect to the search page after successful login TEST
         navigate('/search'); // This line will redirect the user
       }
     } catch (error) {
