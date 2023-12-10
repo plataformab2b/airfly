@@ -27,11 +27,11 @@ const RegisterForm = () => {
     try {
       // Send a POST request to the register endpoint with the registration data
       const response = await axios.post('http://localhost:3001/register', registrationData);
-
+  
       // If the registration is successful, show a success message
-      if (response.data) {
+      if (response && response.data) {
         setRegistrationMessage('Your registration has been completed successfully.');
-
+  
         // Reset the form for a new registration
         setRegistrationData({
           username: '',
@@ -41,8 +41,13 @@ const RegisterForm = () => {
       }
     } catch (error) {
       // If there's an error during registration, log it and set an error message
-      console.error('Registration error:', error.response.data.error);
-      setRegistrationMessage('Registration failed. Please try again.');
+      if (error.response && error.response.data) {
+        console.error('Registration error:', error.response.data.error);
+        setRegistrationMessage(`Registration failed: ${error.response.data.error}`);
+      } else {
+        console.error('Registration error:', error);
+        setRegistrationMessage('Registration failed. Please try again.');
+      }
     }
   };
 

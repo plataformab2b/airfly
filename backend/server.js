@@ -35,13 +35,10 @@ app.use(passport.initialize());
 
 // CORS options and setup
 const corsOptions = {
-  origin: function (origin, callback) {
-      if (!origin || origin.startsWith('http://localhost:')) {
-          callback(null, true);
-      } else {
-          callback(new Error('Not allowed by CORS'));
-      }
-  }
+  origin: 'http://127.0.0.1:3000', // Allow only http://127.0.0.1:3000
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow these HTTP methods
+  credentials: true, // Allow cookies to be sent with the request
+  optionsSuccessStatus: 200 // For legacy browser support
 };
 app.use(cors(corsOptions));
 
@@ -63,7 +60,7 @@ app.use(express.json());
 app.use('/api/search-flights', searchFlightsRoutes);
 app.get('/profile', passport.authenticate('jwt', { session: false }), accountController.profile);
 app.post('/login', passport.authenticate('local'), accountController.login);
-app.post('/register', accountController.register);
+app.post('/register', cors(corsOptions), accountController.register); // Added cors() here
 
 // Default route
 app.get('/', (req, res) => {
