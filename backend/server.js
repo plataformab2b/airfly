@@ -35,11 +35,12 @@ app.use(passport.initialize());
 
 // CORS options and setup
 const corsOptions = {
-  origin: 'http://127.0.0.1:3000', // Allow only http://127.0.0.1:3000
+  origin: true, // Allow all origins
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow these HTTP methods
   credentials: true, // Allow cookies to be sent with the request
   optionsSuccessStatus: 200 // For legacy browser support
 };
+
 app.use(cors(corsOptions));
 
 // Connect to MongoDB
@@ -51,7 +52,6 @@ mongoose.connect('mongodb+srv://airfly_db:airfly_db@renee.iku2dns.mongodb.net/re
 }).catch(err => {
   console.error('Connection error', err);
 });
-
 
 // Express JSON parser
 app.use(express.json());
@@ -72,12 +72,3 @@ const port = 3001;
 app.listen(port, () => {
   console.log(`Backend running on http://localhost:${port}`);
 });
-
-
-
-
-
-
-
-
-
