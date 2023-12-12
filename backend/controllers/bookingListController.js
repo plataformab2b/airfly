@@ -8,8 +8,8 @@ const createBooking = async (req, res) => {
     const { flightId, userId } = req.body;
 
     const newBooking = new Booking({
-      flightId,
-      userId,
+      
+      user: userId,
       // Add other booking details as needed
     });
 
@@ -39,8 +39,21 @@ const addBooking = async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+const getUserBookings = async (req, res) => {
+  try {
+    // Fetch bookings associated with the authenticated user
+    const userId = req.user.id; // Assuming user ID is stored in req.user after authentication
+    const userBookings = await Booking.find({ userId });
+
+    res.json(userBookings);
+  } catch (error) {
+    console.error('Error fetching user bookings:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
 
 module.exports = {
+  getUserBookings,
   getAllBookings,
   getBookingById,
   addBooking,
