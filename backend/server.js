@@ -68,7 +68,7 @@ app.get('/', (req, res) => {
 });
 
 // Server setup
-const port = 3001;
+const port = process.env.PORT || 3001; // Cambiado para usar la variable de entorno PORT
 app.listen(port, () => {
-  console.log(`Backend running on http://localhost:${port}`);
+  console.log(`Backend running on port ${port}`);
 });

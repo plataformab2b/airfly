@@ -9,8 +9,7 @@ exports.login = async function (req, res) {
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-    
-    // Resto del código para verificar la contraseña aquí, si es necesario.
+
     
     const payload = { 
       id: user.id, 
