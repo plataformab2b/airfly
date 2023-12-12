@@ -10,6 +10,7 @@ import HomePage from './components/HomePage';
 import BookingForm from './components/BookingForm';
 import PaymentForm from './components/PaymentForm'; // Import the PaymentForm component
 import PaymentSuccess from './components/PaymentSuccess'; // Import the PaymentSuccess component
+import MyBookings from './components/MyBookings';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +29,8 @@ function App() {
         <Route path="/register" element={<PublicRoute isLoggedIn={isLoggedIn}><RegisterForm /></PublicRoute>} /> {/* Usa PublicRoute para la ruta /register */}
         <Route path="/booking-form" element={<BookingForm />} />
         <Route path="/payment-form" element={<PaymentForm />} />
-        <Route path="/paymentsuccess" element={<PaymentSuccess/>} />        {/* more routes*/}
+        <Route path="/paymentsuccess" element={<PaymentSuccess/>} />   
+        <Route path="/MyBookings" element={<MyBookings />} />     {/* more routes*/}
         {/* Pass handleLogout to the components that need it */}
       </Routes>
     </Router>

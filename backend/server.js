@@ -13,6 +13,7 @@ const User = require('./models/user');
 const accountController = require('./controllers/accountController');
 const searchFlightsRoutes = require('./routes/searchFlights');
 const axios = require('axios');
+const bookingRoutes = require('./routes/bookingRoutes');
 
 // Initialize express app
 const app = express();
@@ -61,6 +62,7 @@ app.use('/api/search-flights', searchFlightsRoutes);
 app.get('/profile', passport.authenticate('jwt', { session: false }), accountController.profile);
 app.post('/login', passport.authenticate('local'), accountController.login);
 app.post('/register', cors(corsOptions), accountController.register); // Added cors() here
+app.use('/renee/bookings', bookingRoutes);
 
 // Default route
 app.get('/', (req, res) => {
