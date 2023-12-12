@@ -16,7 +16,7 @@ exports.searchFlights = async (req, res) => {
     const response = await axios.get(url, { params });
     const flightsData = response.data;
 
-    // Maneja aquí los datos de vuelo como necesites, por ejemplo, enviándolos de vuelta al cliente
+
     res.status(200).json(flightsData);
   } catch (error) {
     console.error('Error fetching flight data:', error);
