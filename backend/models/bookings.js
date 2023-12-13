@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
+const Booking = require('../models/booking');
 
 const bookingSchema = new mongoose.Schema({
   // Include all the fields you want to store from the Flight schema
+
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
+  
   weekday: {
     type: Number,
     required: true
